@@ -1,7 +1,7 @@
 from __future__ import division
-import motorControl.pwm as pwm_mod
+import motorDriver.pwm as pwm_mod
 import time
-import socketRec as socket
+import socket
 import sys
 import numpy as np
 
@@ -64,7 +64,15 @@ if __name__ == "__main__":
     pwm = pwm_setup()
     print("Starting Test")
     s = socket.initSocket()
-    socket.connect(s,sys.argv[1],int(sys.argv[2]))
+    while True:
+        try:
+            if len(sys.argv) == 3:
+                socket.connect(s,sys.argv[1],int(sys.argv[2]))
+            else:
+                socket.connect(s,"10.42.0.1",50676)
+            break
+        except:
+            pass
     while True:
         rec = s.recv(4096)
         if(rec == "stop"):

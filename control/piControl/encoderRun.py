@@ -1,6 +1,6 @@
 from __future__ import division
 import encoder
-import socketRec as socket
+import socket
 import threading
 import time
 import sys
@@ -43,7 +43,13 @@ if __name__ == "__main__":
     encoder.encoderSetup()
     checkArgs()
     s = socket.initSocket()
-    socket.connect(s,IP,host)
+    while True:
+        try:
+            socket.connect(s,IP,host)
+            break
+        except:
+            pass
+
     #t1 = threading.Thread(sendData, args= ())
     t = sendData(.01)
     t.daemon = True
