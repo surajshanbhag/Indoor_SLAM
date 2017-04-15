@@ -9,7 +9,7 @@ def initialize_Socket():
 
     # reserve a port on your computer in our
     # case it is 12345 but it can be anything
-    port = 12345
+    port = 50676
 
     # Next bind to the port
     # we have not typed any ip in the ip field
