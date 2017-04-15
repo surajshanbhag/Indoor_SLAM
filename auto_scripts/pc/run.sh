@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 echo "starting roscore"
 screen -d -m -S roscore ./start-roscore.sh
 sleep 5
@@ -10,6 +10,9 @@ screen -d -m -S joynode ./start-joy_node.sh
 sleep 5
 echo "starting motor control" 
 screen -d -m -S motor_control ./start-motor_control.sh
+sleep 5
+echo "starting encoder " 
+screen -d -m -S encoder ./start-encoder.sh
 sleep 5
 echo "starting rosreceiver_left" 
 screen -d -m -S rosreceiver_left ./start-rosreceiver_left.sh
