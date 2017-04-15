@@ -1,6 +1,6 @@
 from __future__ import division
 import encoder
-import socket
+import socket_class as socket
 import threading
 import time
 import sys

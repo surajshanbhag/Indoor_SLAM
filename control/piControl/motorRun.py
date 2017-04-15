@@ -1,7 +1,7 @@
 from __future__ import division
 import motorDriver.pwm as pwm_mod
 import time
-import socket
+import socket_class as socket
 import sys
 import numpy as np
 
