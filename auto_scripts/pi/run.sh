@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 v4l2-ctl -c focus_auto=0
 echo "running left streamer"

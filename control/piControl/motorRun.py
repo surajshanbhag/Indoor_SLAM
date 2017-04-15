@@ -42,6 +42,11 @@ def run_motors_call(pwm,R_vel, L_vel):
     global RMotorCh,LMotorCh
     global servo_min,servo_nut,servo_max,speed
 
+    if R_vel < 0:
+        R_vel = 0
+
+    if L_vel < 0:
+        L_vel = 0
 
     if(RMotorCh is None or LMotorCh is  None):
         print("Motors not setup")
