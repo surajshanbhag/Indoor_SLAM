@@ -1,0 +1,222 @@
+<?xml version="1.0"?>
+<robot name="robot">
+    <property name="M_PI" value="3.14159"/>
+
+    <link name="chassis_footprint"/>
+    <link name="chassis_base">
+        <collision name='collision'>
+            <geometry>
+                <box size="2 0.5 1.5"/>
+            </geometry>
+        </collision>
+
+        <visual name='visual'>
+            <geometry>
+                <box size="2 0.5 1.5"/>
+            </geometry>
+            <material name="white">
+                <color rgba="1 1 1 0.8"/>
+            </material>
+        </visual>
+    </link>
+    <joint name="chassis_footprint_joint" type="fixed">
+        <parent link="chassis_footprint"/>
+        <child link="chassis_base"/>
+        <origin xyz="0 0 0.95" rpy="0 0 0"/>
+    </joint>
+    <link name="chassis_extension_1">
+        <collision name='collision'>
+            <geometry>
+                <box size="1 1 1.5"/>
+            </geometry>
+        </collision>
+
+        <visual name='visual'>
+            <geometry>
+                <box size="1 1 1.5"/>
+            </geometry>
+            <material name="white">
+                <color rgba="1 1 1 0.8"/>
+            </material>
+        </visual>
+    </link>
+    <joint name="chassis_extension_joint_1" type="fixed">
+        <parent link="chassis_base"/>
+        <child link="chassis_extension_1"/>
+    </joint>
+    <link name="chassis_extension_2">
+        <collision name='collision'>
+            <geometry>
+                <box size="2 1 1"/>
+            </geometry>
+        </collision>
+
+        <visual name='visual'>
+            <geometry>
+                <box size="2 1 1"/>
+            </geometry>
+            <material name="white">
+                <color rgba="1 1 1 0.8"/>
+            </material>
+        </visual>
+    </link>
+    <joint name="chassis_extension_joint_2" type="fixed">
+        <parent link="chassis_base"/>
+        <child link="chassis_extension_2"/>
+        <origin xyz="0 0 0.25" rpy="0 0 0"/>
+    </joint>
+    <link name="front_axel">
+        <collision name='collision'>
+            <geometry>
+                <cylinder length="1" radius="0.05"/>
+            </geometry>
+        </collision>
+
+        <visual name='visual'>
+            <geometry>
+                <cylinder length="1" radius="0.05"/>
+            </geometry>
+            <material name="grey">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </visual>
+    </link>
+    <link name="rear_axel">
+        <collision name='collision'>
+            <geometry>
+                <cylinder length="1" radius="0.05"/>
+            </geometry>
+        </collision>
+
+        <visual name='visual'>
+            <geometry>
+                <cylinder length="1" radius="0.05"/>
+            </geometry>
+            <material name="grey">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </visual>
+    </link>
+    <joint name="front_axel_joint" type="continuous">
+        <parent link="chassis_base"/>
+        <child link="front_axel"/>
+        <origin xyz="0.8 0 -0.75" rpy="1.570 0 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+    <joint name="rear_axel_joint" type="continuous">
+        <parent link="chassis_base"/>
+        <child link="rear_axel"/>
+        <origin xyz="-0.8 0 -0.75" rpy="1.570 0 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+    <link name="steered_wheel_left">
+        <collision name='collision'>
+            <geometry>
+                <cylinder length="0.1" radius="0.2"/>
+            </geometry>
+        </collision>
+
+        <visual name='visual'>
+            <geometry>
+                <cylinder length="0.1" radius="0.2"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+    </link>
+    <joint name="steered_wheel_left_joint" type="continuous">
+        <parent link="front_axel"/>
+        <child link="steered_wheel_left"/>
+        <origin xyz="0 0 0.5" rpy="0 0 1.570"/>
+        <axis xyz="0 1 1"/>
+    </joint>
+    <link name="steered_wheel_right">
+        <collision name='collision'>
+            <geometry>
+                <cylinder length="0.1" radius="0.2"/>
+            </geometry>
+        </collision>
+
+        <visual name='visual'>
+            <geometry>
+                <cylinder length="0.1" radius="0.2"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+    </link>
+    <joint name="steered_wheel_right_joint" type="continuous">
+        <parent link="front_axel"/>
+        <child link="steered_wheel_right"/>
+        <origin xyz="0 0 -0.5" rpy="0 0 1.570"/>
+        <axis xyz="0 1 1"/>
+    </joint>
+    <link name="power_wheel_left">
+        <collision name='collision'>
+            <geometry>
+                <cylinder length="0.1" radius="0.2"/>
+            </geometry>
+        </collision>
+
+        <visual name='visual'>
+            <geometry>
+                <cylinder length="0.1" radius="0.2"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+    </link>
+    <joint name="power_wheel_left_joint" type="continuous">
+        <parent link="rear_axel"/>
+        <child link="power_wheel_left"/>
+        <origin xyz="0 0 0.5" rpy="0 0 1.570"/>
+        <axis xyz="0 1 1"/>
+    </joint>
+    <link name="power_wheel_right">
+        <collision name='collision'>
+            <geometry>
+                <cylinder length="0.1" radius="0.2"/>
+            </geometry>
+        </collision>
+
+        <visual name='visual'>
+            <geometry>
+                <cylinder length="0.1" radius="0.2"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+    </link>
+    <joint name="power_wheel_right_joint" type="continuous">
+        <parent link="rear_axel"/>
+        <child link="power_wheel_right"/>
+        <origin xyz="0 0 -0.5" rpy="0 0 1.570"/>
+        <axis xyz="0 1 1"/>
+    </joint>
+    <link name="laser_scanner">
+        <collision name='collision'>
+            <geometry>
+                <cylinder length="0.2" radius="0.08"/>
+            </geometry>
+        </collision>
+
+        <visual name='visual'>
+            <geometry>
+                <cylinder length="0.2" radius="0.08"/>
+            </geometry>
+            <material name="red">
+                <color rgba="1 0 0 1"/>
+            </material>
+        </visual>
+    </link>
+    <joint name="laser_scanner_joint" type="fixed">
+        <parent link="chassis_base"/>
+        <child link="laser_scanner"/>
+        <origin xyz="1.08 0 0.3" rpy="0 0 0"/>
+        <axis xyz="0 0 0 "/>
+    </joint>
+</robot>
