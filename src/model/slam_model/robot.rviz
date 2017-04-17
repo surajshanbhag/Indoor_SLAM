@@ -6,6 +6,8 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /TF1
+        - /TF1/Frames1
       Splitter Ratio: 0.5
     Tree Height: 775
   - Class: rviz/Selection
@@ -132,6 +134,68 @@ Visualization Manager:
       Update Interval: 0
       Value: true
       Visual Enabled: true
+    - Class: rviz/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: false
+        axel_link:
+          Value: false
+        base_link:
+          Value: false
+        camera_left_link:
+          Value: false
+        camera_link:
+          Value: true
+        camera_right_link:
+          Value: false
+        chassis_link:
+          Value: false
+        left_wheel_link:
+          Value: false
+        raspberry_link_1:
+          Value: false
+        raspberry_link_2:
+          Value: false
+        right_wheel_link:
+          Value: false
+        shell_link_1:
+          Value: false
+        shell_link_2:
+          Value: false
+        shell_link_3:
+          Value: false
+        shell_link_4:
+          Value: false
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        base_link:
+          chassis_link:
+            shell_link_1:
+              axel_link:
+                left_wheel_link:
+                  {}
+                right_wheel_link:
+                  {}
+              shell_link_2:
+                {}
+              shell_link_3:
+                raspberry_link_1:
+                  {}
+                raspberry_link_2:
+                  {}
+              shell_link_4:
+                camera_link:
+                  camera_left_link:
+                    {}
+                  camera_right_link:
+                    {}
+      Update Interval: 0
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -156,7 +220,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.65987349
+      Distance: 0.956582367
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -170,10 +234,10 @@ Visualization Manager:
       Focal Shape Size: 0.0500000007
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.690398335
+      Pitch: 0.470398545
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.0453968
+      Yaw: 0.180397779
     Saved: ~
 Window Geometry:
   Displays:

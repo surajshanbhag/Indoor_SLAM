@@ -200,6 +200,7 @@
         <origin xyz="${shell_base_x_size/2+lidar_radius} 0 ${shell_base_z_size/6}" rpy="0 0 0"/>
     </xacro:robot_zed-->
 
+    <link name="camera_link"/>
     <link name="camera_left_link">
         <collision name='collision'>
             <geometry>
@@ -213,18 +214,19 @@
             <origin xyz="0 0.05 -0.005" rpy="${M_PI/2} 0 -${M_PI/2} "/>
         </visual>
     </link>
-    <joint name="camera_left_joint" type="fixed">
-        <parent link="shell_link_4"/>
-        <child link="camera_left_link"/>
-        <!--origin xyz="${shell_4_x_size/2} 0.0773862 0.01778" rpy="0 -0.209439 0"/-->
-        <origin xyz="${shell_4_x_size/2} 0.0773862 0.01778" rpy="0 0 0"/>
-    </joint>
-    <link name="camera_link"/>
     <joint name="camera_joint" type="fixed">
-        <parent link="camera_left_link"/>
+        <parent link="shell_link_4"/>
         <child link="camera_link"/>
         <!--origin xyz="${shell_4_x_size/2} 0.0773862 0.01778" rpy="0 -0.209439 0"/-->
-        <origin xyz="0 0 0" rpy="-${M_PI/2} 0 -${M_PI/2}"/>
+        <!--origin xyz="${shell_4_x_size/2} 0.0773862 0.01778" rpy="0 0 0"/-->
+        <!--origin xyz="${shell_4_x_size/2} 0 0.01778" rpy="${M_PI/2} ${M_PI/2} 0"/-->
+        <origin xyz="${shell_4_x_size/2} 0 0.01778" rpy="0 ${M_PI/2} 0 "/>
+    </joint>
+    <joint name="camera_left_joint" type="fixed">
+        <parent link="camera_link"/>
+        <child link="camera_left_link"/>
+        <!--origin xyz="${shell_4_x_size/2} 0.0773862 0.01778" rpy="0 -0.209439 0"/-->
+        <origin xyz="0 0.0773862 0" rpy="0 0 -${M_PI/2}"/>
     </joint>
     <link name="camera_right_link">
         <collision name='collision'>
@@ -240,9 +242,9 @@
         </visual>
     </link>
     <joint name="camera_right_joint" type="fixed">
-        <parent link="camera_left_link"/>
+        <parent link="camera_link"/>
         <child link="camera_right_link"/>
-        <origin xyz="0 -0.153924 0" rpy="-${M_PI/2} 0 -${M_PI/2}"/>
+        <origin xyz="0 -0.0773862 0" rpy="0 0 -${M_PI/2}"/>
     </joint>
     <link name="raspberry_link_1">
         <collision name='collision'>
