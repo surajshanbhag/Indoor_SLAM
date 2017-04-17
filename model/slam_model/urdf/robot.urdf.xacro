@@ -61,8 +61,9 @@
     <property name="wheel_vertical_offset" value="0.085" />
     <xacro:macro name="robot_summer"/>
 
-    <link name="chassis_footprint"/>
-    <link name="base_link">
+    <!--link name="chassis_footprint"/-->
+    <link name="base_link"/>
+    <link name="chassis_link">
         <collision name='collision'>
             <geometry>
                 <box size="${chassis_base_x_size} ${chassis_base_y_size} ${chassis_base_z_size}"/>
@@ -78,11 +79,16 @@
             </material>
         </visual>
     </link>
-    <joint name="chassis_footprint_joint" type="fixed">
-        <parent link="chassis_footprint"/>
-        <child link="base_link"/>
-        <origin xyz="0 0 ${chassis_base_vertical_offset}" rpy="0 0 0"/>
+    <joint name="chassis_baselink_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="chassis_link"/>
+        <origin xyz="0.04191 0 0" rpy="0 0 0"/>
     </joint>
+    <!--joint name="chassis_footprint_joint" type="fixed">
+        <parent link="chassis_footprint"/>
+        <child link="chassis_link"/>
+        <origin xyz="0 0 ${chassis_base_vertical_offset}" rpy="0 0 0"/>
+    </joint-->
 
     <link name="shell_link_1">
         <collision name='collision'>
@@ -100,7 +106,7 @@
         </visual>
     </link>
     <joint name="chassis_shell_1_joint" type="fixed">
-        <parent link="base_link"/>
+        <parent link="chassis_link"/>
         <child link="shell_link_1"/>
         <origin xyz="${shell_1_x_loc} ${shell_1_y_loc} ${shell_1_z_loc}" rpy="0 0 0"/>
     </joint>
@@ -218,7 +224,7 @@
         <parent link="camera_left_link"/>
         <child link="camera_link"/>
         <!--origin xyz="${shell_4_x_size/2} 0.0773862 0.01778" rpy="0 -0.209439 0"/-->
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="-${M_PI/2} 0 -${M_PI/2}"/>
     </joint>
     <link name="camera_right_link">
         <collision name='collision'>
@@ -230,13 +236,13 @@
             <geometry>
                 <mesh filename="package://robot_model/meshes/Logitech_C920.stl" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin xyz="0 0.05 -0.005" rpy="${M_PI/2} 0 -${M_PI/2} "/>
+            <origin xyz="0 0.05 -0.005" rpy="+${M_PI/2} 0 -${M_PI/2} "/>
         </visual>
     </link>
     <joint name="camera_right_joint" type="fixed">
         <parent link="camera_left_link"/>
         <child link="camera_right_link"/>
-        <origin xyz="0 -0.153924 0" rpy="0 0 0"/>
+        <origin xyz="0 -0.153924 0" rpy="-${M_PI/2} 0 -${M_PI/2}"/>
     </joint>
     <link name="raspberry_link_1">
         <collision name='collision'>

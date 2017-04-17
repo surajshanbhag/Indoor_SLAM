@@ -63,16 +63,40 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        chassis_base_link:
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera_left_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        chassis_footprint:
+        camera_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        camera_right_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        chassis_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         left_wheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        raspberry_link_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        raspberry_link_2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -111,7 +135,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: chassis_footprint
+    Fixed Frame: base_link
     Frame Rate: 30
   Name: root
   Tools:
@@ -132,7 +156,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.445334375
+      Distance: 2.65987349
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -146,10 +170,10 @@ Visualization Manager:
       Focal Shape Size: 0.0500000007
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.0603979193
+      Pitch: 0.690398335
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.34539747
+      Yaw: 2.0453968
     Saved: ~
 Window Geometry:
   Displays:
