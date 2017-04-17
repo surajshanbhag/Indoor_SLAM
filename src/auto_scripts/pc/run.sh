@@ -25,4 +25,4 @@ screen -d -m -S rosreceiver_synch ./scripts/start-rosreceiver_synch.sh
 sleep 5
 
 echo "ALL set to go!"
-echo "Check if the comm light is green: else run :  pkill screen   and execute this script again"
+
