@@ -1,4 +1,5 @@
 #!/bin/bash
 source /opt/ros/kinetic/setup.sh
 source ~/catkin_ws/devel/setup.bash
-python ../../../vision/stereoReceiver/rosReceiver_synch.py
+rosrun ros_receiver rosReceiver_synch.py 
+#python ../../../vision/stereoReceiver/rosReceiver_synch.py

@@ -79,4 +79,7 @@ def receiver(filename,port=50677):
         pic=''
 
 if __name__ == '__main__':
-    receiver(filename=sys.argv[1],port=50677)
+    if (len(sys.argv[1]) == 1):
+        receiver(filename='left.yaml',port=50677)
+    else:
+        receiver(filename=sys.argv[1],port=50677)
