@@ -1,6 +1,9 @@
 #!/bin/bash
+sudo v4l2-ctl --set-ctrl=focus_auto=0 --dev=/dev/video1
+sudo v4l2-ctl --set-ctrl=focus_absolute=0 --dev=/dev/video1
+sudo v4l2-ctl --set-ctrl=focus_auto=0 --dev=/dev/video0
+sudo v4l2-ctl --set-ctrl=focus_absolute=0 --dev=/dev/video0
 
-v4l2-ctl -c focus_auto=0
 echo "running left streamer"
 screen -d -m -S leftstreamer ~/Indoor_SLAM/auto_scripts/pi/run_left.sh
 echo "waiting for 20s"
