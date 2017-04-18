@@ -23,6 +23,12 @@ sleep 5
 echo "starting rosreceiver_synch" 
 screen -d -m -S rosreceiver_synch ./scripts/start-rosreceiver_synch.sh
 sleep 5
+echo "starting stereo proc" 
+screen -d -m -S stereo_proc ./scripts/start-stereo_proc.sh
+sleep 5
+echo "starting rtab" 
+screen -d -m -S rtab ./scripts/start-rtab.sh
+sleep 5
 
 echo "ALL set to go!"
 

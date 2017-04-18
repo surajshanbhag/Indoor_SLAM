@@ -41,7 +41,7 @@ def camRaw_right(data):
     camera_info_right.header.stamp=rosTime
     camera_raw_left.header.frame_id='camera_left_link'
     camera_raw_right.header.frame_id='camera_right_link'
-    camera_info_right.header.frame_id='camera_left_link'
+    camera_info_left.header.frame_id='camera_left_link'
     camera_info_right.header.frame_id='camera_right_link'
     cameraraw_left_pub.publish(camera_raw_left)
     cameraraw_right_pub.publish(camera_raw_right)

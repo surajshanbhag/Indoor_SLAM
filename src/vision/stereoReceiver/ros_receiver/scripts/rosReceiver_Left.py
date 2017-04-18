@@ -22,6 +22,7 @@ def parse_yaml(filename,cam_info):
     cam_info.R = calib_data['rectification_matrix']['data']
     cam_info.P = calib_data['projection_matrix']['data']
     cam_info.distortion_model = calib_data['distortion_model']
+    cam_info.header.frame_id='camera_left_link'
     #return cam_info
 
 def receiver(filename,port=50677):
@@ -34,14 +35,14 @@ def receiver(filename,port=50677):
     pic=''
     temp=-1
 # ROS stuf
+    rospy.init_node('left_camera_streamer',anonymous=True)
     image_publisher=rospy.Publisher("/camera/left/image_raw",Image,queue_size=10)
     cameraInfo_publisher=rospy.Publisher("/camera/left/camera_info",CameraInfo,queue_size=10)
-    rospy.init_node('left_camera_streamer',anonymous=True)
     bridge=CvBridge()
     camera_info=CameraInfo()
     parse_yaml(filename,camera_info)
-    camera_info.height=600
-    camera_info.width=800
+    camera_info.height=480
+    camera_info.width=640
     while True:
         temp=-1
         flag=0
@@ -79,7 +80,7 @@ def receiver(filename,port=50677):
         pic=''
 
 if __name__ == '__main__':
-    if (len(sys.argv[1]) == 1):
-        receiver(filename='left.yaml',port=50677)
+    if (len(sys.argv) == 1):
+        print "Usage : python rosReceiver_Left.py left.yaml"
     else:
         receiver(filename=sys.argv[1],port=50677)

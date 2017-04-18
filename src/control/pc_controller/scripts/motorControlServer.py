@@ -6,7 +6,7 @@ from sensor_msgs.msg import Joy
 #from xbox1control.msg import velocities
 import server
 
-global mode, pub, prevButton
+global mode, pub, prevbutton
 global R_vel, L_vel
 global reply
 global c
@@ -51,7 +51,7 @@ def joy_call(data):
 
 def main():
     global R_vel, L_vel
-    global mode, pub, prevButton
+    global mode, pub, prevbutton
     global reply
     global c
     R_vel = 0
