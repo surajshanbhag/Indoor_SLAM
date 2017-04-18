@@ -1,4 +1,4 @@
-import motorTest as pwm_mod
+import motorRun as pwm_mod
 import time
 pwm = pwm_mod.pwm_setup()
 if __name__ == "__main__":
