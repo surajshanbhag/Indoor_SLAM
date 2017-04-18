@@ -11,6 +11,6 @@ sleep 20
 echo "running right streamer"
 screen -d -m -S rightstreamer ./scripts/start_right.sh
 echo "running encoders"
-screen -d -m -S encoder ./pi/scripts/start_encoder.sh
+screen -d -m -S encoder ./scripts/start_encoder.sh
 echo "running motor"
-screen -d -m -S motorcontrol ./pi/scripts/start_motor.sh
+screen -d -m -S motorcontrol ./scripts/start_motor.sh
