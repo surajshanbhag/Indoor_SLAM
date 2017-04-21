@@ -31,7 +31,7 @@ def pwm_setup():
     #max = 2520us 2520/4.886 = 516
     servo_max = 2520/tick
     #neuteral = 1536us 1536/4.886 = 314.47
-    servo_nut = 1536.5/tick
+    servo_nut = 1550/tick
 
     RMotorCh = 0
     LMotorCh = 2
