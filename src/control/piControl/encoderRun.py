@@ -28,10 +28,12 @@ class sendData(threading.Thread):
 def right():
     global rightC
     rightC += 1
+    print "right: ",rightC,"\t","left :",leftC
 
 def left():
     global leftC
     leftC += 1
+    print "right: ",rightC,"\t","left :",leftC
 
 def checkArgs():
     global IP,host
@@ -41,17 +43,21 @@ def checkArgs():
 
 if __name__ == "__main__":
     encoder.encoderSetup()
-    checkArgs()
-    s = socket.initSocket()
-    while True:
-        try:
-            socket.connect(s,IP,host)
-            break
-        except:
-            pass
+    if len(sys.argv) in (1,3):
+        checkArgs()
+        s = socket.initSocket()
+        while True:
+            try:
+                socket.connect(s,IP,host)
+                break
+            except:
+                pass
 
-    #t1 = threading.Thread(sendData, args= ())
-    t = sendData(.01)
-    t.daemon = True
-    t.start()
-    encoder.getEncoder(right,left)
+        #t1 = threading.Thread(sendData, args= ())
+        t = sendData(.01)
+        t.daemon = True
+        t.start()
+        encoder.getEncoder(right,left)
+    else:
+        encoder.getEncoder(right,left)
+

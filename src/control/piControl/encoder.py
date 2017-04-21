@@ -13,7 +13,7 @@ DOUTL = None
 CSL = None
 
 waitTime = .00005
-def getEncoder(funcR, funcL, threshold = [317,290]):
+def getEncoder(funcR, funcL, threshold = [285,300,285,300]):
     R_flag = [False,False]
     L_flag = [False,False]
     R_last, L_last = (0,0)
@@ -23,13 +23,13 @@ def getEncoder(funcR, funcL, threshold = [317,290]):
         if(not R_flag and R<threshold[0] and R_last<threshold[0]):
             R_flag = True
             funcR()
-        elif(R_flag and R>threshold[0] and R_last>threshold[0]):
+        elif(R_flag and R>threshold[1] and R_last>threshold[1]):
             R_flag = False
             funcR()
-        if(not L_flag and L<threshold[1] and L_last<threshold[1]):
+        if(not L_flag and L<threshold[2] and L_last<threshold[2]):
             L_flag = True
             funcL()
-        elif(L_flag and L>threshold[1] and L_last<threshold[1]):
+        elif(L_flag and L>threshold[3] and L_last<threshold[3]):
             L_flag = False
             funcL()
         L_last = L
