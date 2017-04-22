@@ -22,7 +22,7 @@ def wlan_meas():
                 #print 'No signal'
         time.sleep(0.2)
 
-def streamer(device='/dev/video1',client_ip='10.42.0.1',client_port=50678,image_size=(640,480)):
+def streamer(device='/dev/video1',client_ip='10.42.0.1',client_port=50678,image_size=(800,600)):
     global filtered_quality
     filtered_quality=55
 
