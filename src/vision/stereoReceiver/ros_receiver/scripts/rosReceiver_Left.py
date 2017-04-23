@@ -41,8 +41,8 @@ def receiver(filename,port=50677):
     bridge=CvBridge()
     camera_info=CameraInfo()
     parse_yaml(filename,camera_info)
-    camera_info.height=480
-    camera_info.width=640
+    camera_info.height=600
+    camera_info.width=800
     while True:
         temp=-1
         flag=0

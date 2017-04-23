@@ -30,7 +30,7 @@ def publish_odom(data):
     if len(encoder_Data) != 2:
         return 0
     #each increment is 0.01319mm of travel
-    distance=[int(side)*0.01319 for side in encoder_Data]
+    distance=[int(side)*0.0065188 for side in encoder_Data]
     #print "distance " , distance
     #print "prev_distance " ,prev_distance
 
