@@ -22,9 +22,11 @@ def wlan_meas():
                 #print 'No signal'
         time.sleep(0.2)
 
-def streamer(device='/dev/video0',client_ip='10.42.0.1',client_port=50677,image_size=(800,600)):
+def streamer(device,client_ip,client_port,image_size):
     global filtered_quality
     filtered_quality=55
+    image_size=[int(value) for value in image_size.split(',')]
+    print image_size
 
 
     video = v4l2capture.Video_device(device)
@@ -84,8 +86,12 @@ def streamer(device='/dev/video0',client_ip='10.42.0.1',client_port=50677,image_
     video.close()
 
 if __name__ == '__main__':
-    print "USAGE : leftStreamer.py <ip>"
-    if len(sys.argv) == 1:
-        streamer(client_ip='10.42.0.1')
-    else:
-        streamer(client_ip=sys.argv[1])
+
+    parser = argparse.ArgumentParser(description='v4l based streamer')
+    parser.add_argument('--device',required=True,default='/dev/video0',help='device name ex: /  dev/video0')
+    parser.add_argument('--ip',required=False,default='10.42.0.1',help='client IP to whom video is streamed ')
+    parser.add_argument('--port',required=False,default='50677',help='client IP to whom video   is streamed ')
+    parser.add_argument('--size',required=False,default='640,480',help='image size to be      streamed')
+    args = vars(parser.parse_args())
+    print(args)
+    streamer(device=args['device'],client_ip=args['ip'],client_port=int(args['port']),image_size=args['size'])

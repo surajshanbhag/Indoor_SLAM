@@ -1,3 +1,4 @@
 #!/bin/bash
 source ~/.bashrc
-~/Indoor_SLAM/src/vision/stereoStreamer/leftStreamer.py
+python ../../vision/stereoStreamer/streamer.py --device=/dev/video0 --ip=10.42.0.1 --port=50677 --size=800,600
+
