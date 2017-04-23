@@ -17,7 +17,7 @@ py_joytrim = lambda x: py_clip(py_dead_zone(x,-.05,.05),-1,1)
 
 auto=1
 manual=0
-offset=0.88
+offset=[2,.9]
 speed=0.1
 
 def joy_call(data):
@@ -38,14 +38,14 @@ def joy_call(data):
     #L_vel = py_joytrim((data.axes[0]-data.axes[1]))
 
     if data.axes[6] == 1:
-        R_vel=speed
+        R_vel=speed*offset[1]
         L_vel=0
     elif data.axes[6] == -1:
         R_vel=0
-        L_vel=speed
+        L_vel=speed*offset[0]
     elif data.axes[4] > 0.9:
-        R_vel=speed*offset
-        L_vel=speed
+        R_vel=speed*offset[1]
+        L_vel=speed*offset[0]
     else:
         R_vel=0
         L_vel=0
