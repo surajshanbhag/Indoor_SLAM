@@ -2,6 +2,7 @@ from __future__ import division
 import time
 from threading import Timer
 import RPi.GPIO as GPIO
+global encoder_values
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
@@ -11,9 +12,10 @@ DOUTR = None
 CSR = None
 DOUTL = None
 CSL = None
+encoder_values=[[0]*512,[0]*512]
 
 waitTime = .00005
-def getEncoder(funcR, funcL, threshold = [285,300,285,300]):
+def getEncoder(funcR, funcL, threshold = [270,300,270,290]):
     R_flag = [False,False]
     L_flag = [False,False]
     R_last, L_last = (0,0)
@@ -100,6 +102,7 @@ def encoderSetup(CLKin = 13, DOUTRin = 20, CSRin = 19, DOUTLin = 21, CSLin = 16)
 
 
 def readEncoder():
+    global encoder_values
     global CLK,DOUTR,DOUTL,CSR,CSL
     ADCdataR=0
     ADCdataL=0
@@ -134,13 +137,25 @@ def readEncoder():
         time.sleep(waitTime)
         time.sleep(waitTime)
 
-    #print("Output R is",ADCdataR)
-    #print("Output L is",ADCdataL)
+    encoder_values[0][ADCdataR]+=1
+    encoder_values[1][ADCdataL]+=1
+    #print("Output R is",ADCdataR,"    Output L is",ADCdataL)
 
     return((ADCdataR, ADCdataL))
 if __name__ == "__main__":
     encoderSetup()
-    while True:
+    count = 2000
+    while count:
         readEncoder()
-        time.sleep(0.50)
+        count-=1
+        #time.sleep(0.50)
+    print 'right'
+    for index,val in enumerate(encoder_values[0]):
+        if val:
+            print index,'\t',val
+
+    print 'left'
+    for index,val in enumerate(encoder_values[1]):
+        if val:
+            print index,'\t',val
     GPIO.cleanup()#to release any resources that script is using

@@ -30,7 +30,9 @@ def streamer(device,client_ip,client_port,image_size):
 
 
     video = v4l2capture.Video_device(device)
+    #sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
     mss=1468
 # Suggest an image size to the device. The device may choose and
 # return another size if it doesn't support the suggested one.
@@ -95,5 +97,5 @@ if __name__ == '__main__':
     args = vars(parser.parse_args())
     for key in args:
             print key,args[key]
-    streamer(device=args['device'],client_ip=args['ip'],client_port=int(args['port']),image_size=args['size'])
+    streamer(device=args['device'],"<broadcast>",client_port=int(args['port']),image_size=args['size'])
 
