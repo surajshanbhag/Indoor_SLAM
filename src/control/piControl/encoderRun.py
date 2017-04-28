@@ -15,6 +15,7 @@ class sendData(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
+        #send info every waitTime
         global s
         global rightC,leftC
         conf = "OK"
@@ -42,6 +43,7 @@ def checkArgs():
         host = sys.argv[2]
 
 if __name__ == "__main__":
+    """if 2 arguments are passed in overwrite IP and port number to those values else use IP = 10.42.0.1 and 50679"""
     encoder.encoderSetup()
     if len(sys.argv) in (1,3):
         checkArgs()
@@ -52,11 +54,13 @@ if __name__ == "__main__":
                 break
             except:
                 pass
-
-        #t1 = threading.Thread(sendData, args= ())
+        
+        #start thread to send info in background
         t = sendData(.01)
         t.daemon = True
         t.start()
+        
+        #read encoder values
         encoder.getEncoder(right,left)
     else:
         encoder.getEncoder(right,left)

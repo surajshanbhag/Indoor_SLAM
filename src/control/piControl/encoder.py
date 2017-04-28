@@ -16,6 +16,12 @@ encoder_values=[[0]*512,[0]*512]
 
 waitTime = .00005
 def getEncoder(funcR, funcL, threshold = [270,300,270,290]):
+    """Reads encoder values. Runs call back function on color change thresholds can be over written
+    Inputs:
+    funcR - function to run on right transition 
+    funcL - function to run on left transitions
+    threshold - format [Right low, Right high, Left low, Left high]
+    """
     R_flag = [False,False]
     L_flag = [False,False]
     R_last, L_last = (0,0)
@@ -37,56 +43,8 @@ def getEncoder(funcR, funcL, threshold = [270,300,270,290]):
         L_last = L
         R_last = R
 
-def getWheelSpeed(numSamples = 8, diameter = 8.5, threshold = [315,290], n = 20):
-#diameter given in cm, threshold may depend on lightlevels, n is the number of devisions on the wheel
-    R_count = 0
-    L_count= 0
-    R_high = []
-    L_high = []
-    R_low = []
-    L_low = []
-    R_flag = False
-    L_flag = False
-    count = 0
-    while True:
-        R,L = readEncoder()
-        if(not R_flag and R<threshold[0]):
-            R_low.append(time.time())
-            R_flag = True
-        elif(R_flag and R>threshold[0]):
-            R_high.append(time.time())
-            R_flag = False
-            R_count+=1
-        if(not L_flag and L<threshold[1]):
-            L_low.append(time.time())
-            L_flag = True
-        elif(L_flag and L>threshold[1]):
-            L_high.append(time.time())
-            L_flag = False
-            L_count+=1
-        if(L_count > numSamples and R_count > numSamples):
-            break
-    time_diff = []
-    for low, high in zip(R_low,R_high):
-        time_diff.append(high-low)
-
-    R_avg = sum(time_diff[1:])/len(time_diff[1:])
-    print "R-time_diff ", time_diff
-    time_diff = []
-    for low, high in zip(L_low,L_high):
-         time_diff.append(high-low)
-
-    L_avg = sum(time_diff[1:])/len(time_diff[1:])
-    print "L-time_diff ", time_diff
-    #speed = D/T, D = C of wheel
-    #C = d*pi, speed = d*pi/(t*n)
-
-    R_speed = (diameter*3.14159)/(R_avg*n*100)
-    L_speed = (diameter*3.14159)/(L_avg*n*100)
-
-    return(R_speed,L_speed)
-
 def encoderSetup(CLKin = 13, DOUTRin = 20, CSRin = 19, DOUTLin = 21, CSLin = 16):
+    """configures encoder GPIPO pins"""
     global CLK,DOUTR,DOUTL,CSR,CSL
     CLK = CLKin
     DOUTR = DOUTRin
@@ -102,16 +60,20 @@ def encoderSetup(CLKin = 13, DOUTRin = 20, CSRin = 19, DOUTLin = 21, CSLin = 16)
 
 
 def readEncoder():
+    """read ADC to get encoder value"""
     global encoder_values
     global CLK,DOUTR,DOUTL,CSR,CSL
     ADCdataR=0
     ADCdataL=0
+    #raise chip select to start transaction 
     GPIO.output(CSL, True)
     GPIO.output(CSR, True)
     time.sleep(waitTime)
     time.sleep(waitTime)
     GPIO.output(CSL, False)
     GPIO.output(CSR, False)
+    
+    #read in data from ADC
     for x in range (0,1):
       if (GPIO.input(CLK)== True):
           GPIO.output(CLK, False)
@@ -137,11 +99,14 @@ def readEncoder():
         time.sleep(waitTime)
         time.sleep(waitTime)
 
+    #store values for debugging purposes 
     encoder_values[0][ADCdataR]+=1
     encoder_values[1][ADCdataL]+=1
     #print("Output R is",ADCdataR,"    Output L is",ADCdataL)
 
     return((ADCdataR, ADCdataL))
+
+
 if __name__ == "__main__":
     encoderSetup()
     count = 2000
@@ -149,6 +114,8 @@ if __name__ == "__main__":
         readEncoder()
         count-=1
         #time.sleep(0.50)
+        
+    #print 2000 measure ADC value to get encode characteristics     
     print 'right'
     for index,val in enumerate(encoder_values[0]):
         if val:

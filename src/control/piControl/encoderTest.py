@@ -1,5 +1,8 @@
 import encoder
 
+#prints min and max values of encoders over the course of 1000 readings 
+#used to get encoder ranges
+
 if __name__ == "__main__":
     encoder.encoderSetup()
     min = [500,500]
