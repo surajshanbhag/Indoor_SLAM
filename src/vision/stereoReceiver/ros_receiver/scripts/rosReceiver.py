@@ -27,12 +27,14 @@ def parse_yaml(filename,cam_info):
 
 def receiver(filename,port,side,link):
 
+    # 1 set up socket
     CLIENT_PORT = port
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     sock.bind(('', CLIENT_PORT))
+
     pic=''
     temp=-1
-# ROS stuf
+    # 2 set up ROS publishers based on options
     if side == 'mono':
         rospy.init_node('camera_streamer')
         image_publisher=rospy.Publisher("/camera/image_raw",Image,queue_size=10)
@@ -42,12 +44,18 @@ def receiver(filename,port,side,link):
         image_publisher=rospy.Publisher('/camera/'+side+'/image_raw',Image,queue_size=10)
         cameraInfo_publisher=rospy.Publisher('/camera/'+side+'/camera_info',CameraInfo,queue_size=10)
 
+    # 2 image converters and CameraInfo(contains camera caliberation data)
     bridge=CvBridge()
     camera_info=CameraInfo()
+
+    # read calibration file and fil the camera info
     parse_yaml(filename,camera_info)
+
+    # 3 VERY IMPORTANT: mention to which link the camera belongs to
     camera_info.header.frame_id=link
 
     while True:
+        #get image
         temp=-1
         flag=0
         while True:
@@ -66,6 +74,7 @@ def receiver(filename,port,side,link):
         if seq != temp+1:
             flag=1
         try:
+            # if complete image was received decode the MJPG to RAW and resize to 2D
             if flag==0:
                 img=cv2.imdecode(np.asarray(bytearray(pic),dtype=np.uint8), 1)
                 res = cv2.resize(img,None,fx=1, fy=1, interpolation = cv2.INTER_CUBIC)
@@ -73,17 +82,16 @@ def receiver(filename,port,side,link):
             flag=1
         try:
             if flag==0:
-                #cv2.imshow('frame',res)
+                # publish camera info and camera images
                 camera_info.header.stamp=rospy.Time.from_sec(time.time())
                 cameraInfo_publisher.publish(camera_info)
                 image_publisher.publish(bridge.cv2_to_imgmsg(img, "bgr8"))
-                if cv2.waitKey(1) & 0xFF == ord('q'):
-                    break;
         except:
             pass
         pic=''
 
 if __name__ == '__main__':
+    #get runtime options
     parser = argparse.ArgumentParser(description='received IP stream and publishes to ROS')
     parser.add_argument('--calibration',required=True,help='calibration file to be used')
     parser.add_argument('--port',required=False,default='50677',help='client IP to whom video is streamed ')

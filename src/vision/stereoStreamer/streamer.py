@@ -89,6 +89,8 @@ def streamer(device,client_ip,client_port,image_size):
 
 if __name__ == '__main__':
 
+    #get runtime options for device and  socket from commandline.
+    # please make sure that the IP and port number are set correctly
     parser = argparse.ArgumentParser(description='v4l based streamer')
     parser.add_argument('--device',required=True,default='/dev/video0',help='device name ex: /  dev/video0')
     parser.add_argument('--ip',required=False,default='10.42.0.1',help='client IP to whom video is streamed ')

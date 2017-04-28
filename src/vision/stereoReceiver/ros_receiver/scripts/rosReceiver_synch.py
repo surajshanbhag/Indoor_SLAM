@@ -34,31 +34,46 @@ def camRaw_right(data):
     global camerainfo_left_pub,camerainfo_right_pub
     global cameraraw_left_pub,cameraraw_right_pub
     camera_raw_right=data
+
+    # sample topics in each callback and when the right image topic is received publish all
+    # at once with new timestamps
+
     rosTime=rospy.Time.from_sec(time.time())
     camera_raw_left.header.stamp=rosTime
     camera_raw_right.header.stamp=rosTime
     camera_info_left.header.stamp=rosTime
     camera_info_right.header.stamp=rosTime
+
     camera_raw_left.header.frame_id=camera_info_left.header.frame_id
     camera_raw_right.header.frame_id=camera_info_right.header.frame_id
+
     cameraraw_left_pub.publish(camera_raw_left)
     cameraraw_right_pub.publish(camera_raw_right)
     camerainfo_left_pub.publish(camera_info_left)
     camerainfo_right_pub.publish(camera_info_right)
 
-if __name__ == '__main__':
+def synchronizer(source_namespace,target_namespace):
     global camerainfo_left_pub,camerainfo_right_pub
     global cameraraw_left_pub,cameraraw_right_pub
     rospy.init_node('camera_sync',anonymous=True)
 
-    rospy.Subscriber('/camera/left/image_raw',Image,camRaw_left)
-    rospy.Subscriber('/camera/right/image_raw',Image,camRaw_right)
-    rospy.Subscriber('/camera/left/camera_info',CameraInfo,camInfo_left)
-    rospy.Subscriber('/camera/right/camera_info',CameraInfo,camInfo_right)
+    # unsynchronized topics
+    rospy.Subscriber(source_namespace+'/left/image_raw',Image,camRaw_left)
+    rospy.Subscriber(source_namespace+'/right/image_raw',Image,camRaw_right)
+    rospy.Subscriber(source_namespace+'/left/camera_info',CameraInfo,camInfo_left)
+    rospy.Subscriber(source_namespace+'/right/camera_info',CameraInfo,camInfo_right)
 
-    camerainfo_left_pub=rospy.Publisher('/stereo/left/camera_info',CameraInfo,queue_size=10)
-    camerainfo_right_pub=rospy.Publisher('/stereo/right/camera_info',CameraInfo,queue_size=10)
-    cameraraw_left_pub=rospy.Publisher('/stereo/left/image_raw',Image,queue_size=10)
-    cameraraw_right_pub=rospy.Publisher('/stereo/right/image_raw',Image,queue_size=10)
+    # synchronized topics objects
+    camerainfo_left_pub=rospy.Publisher(target_namespace+'/left/camera_info',CameraInfo,queue_size=10)
+    camerainfo_right_pub=rospy.Publisher(target_namespace+'/right/camera_info',CameraInfo,queue_size=10)
+    cameraraw_left_pub=rospy.Publisher(target_namespace+'/left/image_raw',Image,queue_size=10)
+    cameraraw_right_pub=rospy.Publisher(target_namespace+'/right/image_raw',Image,queue_size=10)
 
     rospy.spin()
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Synchronize received Image frames and publish')
+    parser.add_argument('--sourceNamespace',required=True,help='source namespace')
+    parser.add_argument('--targetNamespace',required=True,help='target namespace')
+    synchronizer(source_namespace=args['sourceNamespace'],target_namespace=args['targetNamespace'])
+
