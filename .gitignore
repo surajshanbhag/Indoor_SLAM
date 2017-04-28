@@ -1,0 +1,6 @@
+*.pyc
+*.swp
+*.swo
+/src/vision/stereoStreamer/select
+/src/vision/stereoStreamer/struct
+/src/vision/stereoStreamer/v4l2capture
