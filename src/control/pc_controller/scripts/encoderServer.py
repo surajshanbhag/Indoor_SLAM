@@ -75,6 +75,7 @@ def publish_odom(data):
         print "publish error"
 
     prev_distance=distance
+    print 'right: ',encoder_Data[0],'\tleft',encoder_Data[1],'\tpos',robot_pos
 
 
 

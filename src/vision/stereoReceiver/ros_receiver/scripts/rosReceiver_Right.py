@@ -29,6 +29,7 @@ def receiver(filename,port=50678):
     CLIENT_IP='10.42.0.1'
     CLIENT_PORT = port
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+    sock.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
 #sock.bind((CLIENT_IP, CLIENT_PORT))
     sock.bind(('', CLIENT_PORT))
     pic=''

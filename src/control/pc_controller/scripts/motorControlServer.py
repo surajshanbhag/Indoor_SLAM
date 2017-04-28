@@ -17,8 +17,8 @@ py_joytrim = lambda x: py_clip(py_dead_zone(x,-.05,.05),-1,1)
 
 auto=1
 manual=0
-offset=[2,.9]
-speed=0.1
+offset=[0.4,.17]#left,right
+speed=0.5
 
 def joy_call(data):
     global prevbutton, mode
