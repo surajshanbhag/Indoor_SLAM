@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <header User Guide/>
+            <h1>User Guide</h1>
+            <p>This page is a User guide to run all the software. </p>
+            <p>NOTE: use <code>chmod +x &ltscript&gt </code> to update execute permissions for each script before executing the scripts mentioned</p>
+            <h2>CAMERA Setup</h2>
+            <ol>
+                <li>Follow the instructions and setup your RP3 and Laptop.</li>
+                <li>First connect The Left side camera to the RPI3</li>
+                <li>Wait for 20s for it to initialize</li>
+                <li>Next connect The Right side camera to the RPI3</li>
+                <li>Wait for 20s for it to initialize</li>
+                <li>The Laptop IP is assumed to be <code>10.42.0.1</code>. In case the IP is different change the IP (10.42.0.1) in the following files to the IP of your PC<ol type='a'>
+                        <li><code>Indoor_SLAM/src/auto_scripts/pi/scripts/start_left.sh</code></li>
+                        <li><code>Indoor_SLAM/src/auto_scripts/pi/scripts/start_right.sh</code></li>
+                        <li><code>Indoor_SLAM/src/auto_scripts/pi/scripts/start_motor.sh</code></li>
+                        <li><code>Indoor_SLAM/src/auto_scripts/pi/scripts/start_encoder.sh</code></li>
+                    </ol></li>
+                    <li>Navigate to<code>Indoor_SLAM/src/auto_scripts/pi</code> folder and execute run_stereo_streamer.sh.</li>
+                    <li>The left Camera should turn on first and 20s later the right camera should turn on.</li>
+                    <li>On the laptop navigate to<code>Indoor_SLAM/src/auto_scripts/pc/</code> folder and execute run_receiver.sh</li>
+                    <li>On a new command line start rqt by typing rqt</li>
+                    <li>Add 2 image_view plug-ins to view the camera feed. Find it in Plugins Menu -> Visualization -> Image View</li>
+                    <li>Select /camera/left/image_raw on one and /camera/right/image_raw on the other image_view dialogue box. The feed should now be visible and should be similar to the scree nshot shown below.</li>
+                    <li>To shutdown all processes run <code>>>$ pkill screen</code> in command line on both pi and laptop</li>
+                    <figure>
+                        <img src="../doc/Images/stereo_view.png" alt="Stereo View" width="50%"/>
+                        <figcaption>Stereo View as seen from RVIZ.</figcaption>
+                    </figure>
+            </ol>
+
+            <h2>Motor Encoder Setup</h2>
+            <ol>
+                <li>follow the instructions and setup The hardware and turn on the power to encoders and motor</li>
+                <li>On the PI navigate to<code>Indoor_SLAM/src/auto_scripts/pi</code> folder and execute run_motor.sh</li>
+                <li>On the PC connect the Microsoft XBOX 360 controller</li>
+                <li>On the PC navigate to<code>Indoor_SLAM/src/auto_scripts/pc</code> folder and execute run_motor.sh</li>
+                <li>Use the joy stick to navigate. ( try pressing A if joystick does not respond)</li>
+                <li>Move to RVIZ window</li>
+                <li>In the RVIZ GUI choose the fixed frame as 'odom'</li>
+                <li>Add a display of type 'Robot Model'. the model of the robot matching the model we created should appear in the window. To know more about this please check $$$$$</li>
+                <li>When the robot moves in the real world, the robot model in the RVIZ should move by approximately the same amount. This is the base localization used for mapping.</li>
+                <figure>
+                    <img src="../doc/Images/urdf.png" alt="RVIZ model" width="25%"/>
+                    <figcaption>Model of Robot as seen in RVIZ created using URDF files.</figcaption>
+                </figure>
+
+            </ol>
+            <br>
+            <p>Please ensure</code> that the Camera setup and Motor setup were successful before proceeding. </p>
+            <h2>Running ORBSLAM </h2>
+            <p>Please Check the ORBSLAM2 <a href='https://github.com/raulmur/ORB_SLAM2'> ROS setup</a> before proceeding</p>
+            <ol>
+                <li> On the PI Navigate to<code>Indoor_SLAM/src/auto_scripts/pi</code> folder and execute run.sh (starts both motors and streamer)</li>
+                <li>On the PC Navigate to<code>Indoor_SLAM/src/auto_scripts/pc</code> folder and execute run_base.sh </li>
+                <li>navigate to ORBSLAM2 directory</li>
+                <li>execute rosrun ORB_SLAM2 Stereo Vocabulary/ORBvoc.txt Examples/Stereo/EuRoC.yaml true </li>
+            </ol>
+            <p>This executes ORBSLAM to the default settings including the recitification parameters. The callibration details are available in <a href='../src/vision/stereoReceiver/'>left.yaml</a> and <a href='../src/vision/stereoReceiver/'>right.yaml</a> </p>
+            <figure>
+                <img src="../doc/Images/ORB.png" alt="ORBSLAM" width="50%"/>
+                <figcaption>Screen shot of running ORBSLAM.</figcaption>
+            </figure>
+            <figure>
+                <img src="../doc/Images/ORBSLAM.png" alt="ORBSLAM" width="50%"/>
+                <figcaption>Screen shot 2 of running ORBSLAM.</figcaption>
+            </figure>
+
+            <h2>Running RTAB </h2>
+            <ol>
+                <li> On the PI Navigate to<code>Indoor_SLAM/src/auto_scripts/pi</code> folder and execute run.sh (starts both motors and streamer)</li>
+                <li>On the PC Navigate to<code>Indoor_SLAM/src/auto_scripts/pc</code> folder and execute run.sh </li>
+                <figure>
+                    <img src="../doc/Images/RTAB 2D.jpg" alt="RTABOccupancy" width="50%"/>
+                    <figcaption>Occupancy Grid Created using RTAB.</figcaption>
+                </figure>>
+                <figure>
+                    <img src="../doc/Images/RTAB Reconstruction.jpg" alt="RTABReconstruction" width="50%"/>
+                    <figcaption>3D reconstruction using RTAB.</figcaption>
+                </figure>
+            </ol>
+        </header>
+    </head>
+</html>
