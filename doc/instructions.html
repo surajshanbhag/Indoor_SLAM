@@ -1,0 +1,43 @@
+<html>
+  <head>
+  <title>Instructions for Setup</title>
+    <header>
+    <h1>Setting up Raspberry Pi 3</h1>
+  <ul>
+   <li>Install Raspbian OS - RASPBIAN JESSIE LITE, Kernel version: 4.4 on an SD Card that has at least 32 Gb of memory from <a href="https://www.raspberrypi.org/downloads/raspbian/">here</a></li>
+    <li>Insert the SD card with the image onto the Raspberry Pi.</li>
+    <li>Connect the Raspberry Pi to the Internet.</li>
+    <li>Open Terminal</li>
+        <ol style='margin-left:3em'>
+        <li>Run:$ sudo apt-get update</li>
+        <li>Run:$ sudo apt-get upgrade</li>
+        <li>Run:$ sudo raspi-config</li>
+        </ol>
+    <li>Press 1: To Change the password</li>
+    <li>Press 5: Interface Options</li>
+    <li>Press P2: Enable SSH</li>
+    <li>Press 5: Interface Options </li>
+    <li>Press P5: Enable I2C </li>
+    <li>Press 4: Localization Options </li>
+    <li>Press I2: Change Time Zone</li>
+    <li>Select: US, Eastern</li>
+    <li>Press 7: Advanced Options </li>
+    <li>Press A1: Expand Filesystem </li>
+    <li>Select Yes when prompted </li>
+    <li>Select Finish </li>
+    <li>Select Yes to reboot </li>
+
+  </ul>
+</header>
+
+<header>
+<h1>Setting up PC</h1>
+<h2>Installing ROS:</h2>
+  <li>Go to <a href="http://wiki.ros.org/kinetic/Installation/Ubuntu">this link</a> and follow the instructions given to install ROS Kinetic and explore the tutorials.</li>
+<h2>Installing ORB-SLAM2</h2>
+   <li>Go to <a href="https://github.com/raulmur/ORB_SLAM2">this link</a> , the git repository and follow the instructions for installing ORB_SLAM2.</li>
+<h2>Installing RTABMAP:</h2>
+<li>Go to <a href="https://github.com/introlab/rtabmap_ros#rtabmap_ros">this link</a> and follow the commands to install RTABMAP on ROS Kinetic.</li>
+<li>The link <a href="http://wiki.ros.org/rtabmap_ros">over here</a> contains all extensive documentation and few demos to get familiar with RTABMAP.</li>
+</header>  
+</html>
