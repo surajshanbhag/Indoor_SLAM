@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <header Practical Problems/>
+            <h1>Problems encountered</h1>
+            <ol>
+                <li>Low Frame Rate While using ROS</li><ul>
+                    <li>Cause    : ROS uses TCP</li>
+                    <li>Solution : Solved by switching to an external UDP streamer and passing into ROS after streaming</li>
+                </ul>
+
+                <li>Broken Pipe Error when streaming</li>
+                <ul>
+                    <li>Cause    : Voltage drop on USP ports during camera initialization</li>
+                    <li>Solution : Solved by waiting for first camera to finish initializing before starting the second.</li>
+                </ul>
+
+                <li>No synchronized frames received by stereo_image_proc</li>
+                <ul>
+                    <li>Cause    : Caused by passing the streams into ROS from two different scripts</li>
+                    <li>Solution : Solved by passing images into ROS as received then spoofing the images’ time stamps</li>
+                    <li>Other Attempts:
+                        <ul>
+                            <li>Attempted to combined senders into one program – Failed due to insufficient buffer size</li>
+                            <li>Attempted to multithread sender/receiver – failed because python is bad at multithreading</li>
+                            <li>Attempted to combined receivers into one program – Failed due to images blocking each</li> other
+                        </ul>
+                    </li>
+                </ul>
+                <li>Encoder accuracy issues</li>
+                <ul>
+                    <li>Cause    : Voltage drop on USP ports during camera initialization</li>
+                    <li>Solution :
+                        <ul>
+                            <li>Improved by reading both sides or transition (black to white and white to black)</li>
+                            <li>Improved by increasing number of divisions.</li>
+                        </ul>
+                    </li>
+                    <li>Note: Still some inaccuracy</li>
+                </ul>
+            </ol>
+            <h1>Future consideration</h1>
+            <ul>
+                <li>Calibrate camera position with respect to each other. – Right now cameras are assumed to be perfectly in line with each other. Calculating the offset from each other and reflecting the difference in the URDF file would improve the accuracy of the mapping</li>
+                <li>Use ORBSLAM odometry – currently due to processing restraints we are using encoders to provide odometry. In the future we would like to use ORBSLAM’s odometry. This would allow for increased accuracy and allow for the functionality to be independent of the platform that you are running on. This would allow for running on other types of vehicles (eg. Drones or other aircraft).</li>
+            </ul>
+        </header>
+    </head>
+</html>

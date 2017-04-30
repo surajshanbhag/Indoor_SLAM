@@ -1,4 +1,5 @@
 #!/usr/bin/bash
+import argparse
 import numpy as np
 import cv2,sys
 import rospy
@@ -56,6 +57,7 @@ def synchronizer(source_namespace,target_namespace):
     global camerainfo_left_pub,camerainfo_right_pub
     global cameraraw_left_pub,cameraraw_right_pub
     rospy.init_node('camera_sync',anonymous=True)
+    print source_namespace,"\t",target_namespace
 
     # unsynchronized topics
     rospy.Subscriber(source_namespace+'/left/image_raw',Image,camRaw_left)
@@ -75,5 +77,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Synchronize received Image frames and publish')
     parser.add_argument('--sourceNamespace',required=True,help='source namespace')
     parser.add_argument('--targetNamespace',required=True,help='target namespace')
+    args = vars(parser.parse_args())
     synchronizer(source_namespace=args['sourceNamespace'],target_namespace=args['targetNamespace'])
 
